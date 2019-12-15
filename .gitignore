@@ -1,0 +1,11 @@
+*.pyc
+*.sw?
+
+# C extension
+*.so
+mixstream/_MixStream.c
+
+# build
+build/
+.eggs/
+*.egg-info/
