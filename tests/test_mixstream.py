@@ -10,17 +10,17 @@ from mixstream._MixStream import VorbisFileMixStream
 class VorbisFileMixStreamTest(unittest.TestCase):
 
     def setUp(self):
-        self.filename = "tests/guitar_drumrolls.ogg"
+        self.filename = b"tests/guitar_drumrolls.ogg"
         self.channel = 5
         self.length = 227.97061224489795
 
     def test_init_file_error(self):
         with self.assertRaises(IOError):
-            VorbisFileMixStream("")
+            VorbisFileMixStream(b"")
 
     def test_init_filetype_error(self):
         with self.assertRaises(VorbisFileError):
-            VorbisFileMixStream("tests/notes_drumrolls.mid")
+            VorbisFileMixStream(b"tests/notes_drumrolls.mid")
 
     def test_play(self):
         mixstream = VorbisFileMixStream(self.filename)
