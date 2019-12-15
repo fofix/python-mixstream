@@ -180,8 +180,10 @@ setup(
     ],
     keywords='music vorbis sdl soundtouch',
     ext_modules=cythonize(ext),
-    setup_requires=['cython'],
+    setup_requires=['cython', 'pytest-runner'],
     install_requires=[
         'Cython >= 0.27',
     ],
+    test_suite="tests",
+    tests_require=["pytest"],
 )
