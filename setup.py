@@ -179,7 +179,7 @@ setup(
         'Topic :: Software Development :: Libraries',
     ],
     keywords='music vorbis sdl soundtouch',
-    ext_modules=cythonize(ext),
+    ext_modules=cythonize(ext, compiler_directives={'language_level': sys.version_info[0]}),
     setup_requires=['cython', 'pytest-runner'],
     install_requires=[
         'Cython >= 0.27',

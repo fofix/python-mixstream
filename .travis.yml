@@ -9,7 +9,7 @@ python:
 
 env:
     global:
-        - SDL_AUDIODRIVER=dummy
+        - SDL_AUDIODRIVER=dummy  # handle alsa issues
 
 before_install:
     - sudo apt-get -qq update
