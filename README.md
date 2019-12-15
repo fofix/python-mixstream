@@ -29,6 +29,6 @@ You'll need those packages:
 
 ### Native modules
 
-Build the extension::
+Build the extension:
 
     python setup.py build_ext --inplace --force
