@@ -155,7 +155,10 @@ ext = Extension(
 
 # setup
 needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
-pytest_runner = ['pytest-runner'] if needs_pytest else []
+pytest_runner = [
+    "pytest-runner<5.3;python_version<'3.3'",
+    "pytest-runner;python_version>'3.3'",
+] if needs_pytest else []
 setup(
     name='mixstream',
     version='1.0',
