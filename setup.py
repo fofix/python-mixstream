@@ -154,6 +154,8 @@ ext = Extension(
 )
 
 # setup
+needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
+pytest_runner = ['pytest-runner'] if needs_pytest else []
 setup(
     name='mixstream',
     version='1.0',
@@ -180,7 +182,7 @@ setup(
     ],
     keywords='music vorbis sdl soundtouch',
     ext_modules=cythonize(ext, compiler_directives={'language_level': sys.version_info[0]}),
-    setup_requires=['cython', 'pytest-runner'],
+    setup_requires=['cython'] + pytest_runner,
     install_requires=[
         'Cython >= 0.27',
     ],
