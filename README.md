@@ -1,6 +1,7 @@
 # MixStream
 
 [![Build Status](https://travis-ci.org/fofix/python-mixstream.svg?branch=master)](https://travis-ci.org/fofix/python-mixstream)
+[![Tests](https://github.com/fofix/python-mixstream/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/fofix/python-mixstream/actions/workflows/tests.yml)
 
 
 MixStream is a C-extension in Python to combine [SoundTouch](https://www.surina.net/soundtouch/) and [SDL_mixer](https://www.libsdl.org/projects/SDL_mixer/).
