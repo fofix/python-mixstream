@@ -6,7 +6,6 @@ except ImportError:
     from setuptools import setup
 
 import os
-import sys
 
 
 # readme
@@ -24,10 +23,6 @@ if os.getenv("WIN_BUID"):
     build_cmake_args.append('-DUSE_WIN_DEP=ON')
 
 # setup
-needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
-pytest_runner = [
-    "pytest-runner;python_version>'3.3'",
-] if needs_pytest else []
 setup(
     name='mixstream',
     version='1.0',
@@ -55,9 +50,7 @@ setup(
         'Topic :: Software Development :: Libraries',
     ],
     keywords='music vorbis sdl soundtouch',
-    setup_requires=['cmake'] + pytest_runner,
     test_suite="tests",
-    tests_require=["pytest"],
     # skbuild options
     cmake_args=build_cmake_args,
 )
