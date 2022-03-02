@@ -25,6 +25,16 @@ case ${operating_system} in
             soundtouch-devel \
             libvorbis-devel
     ;;
+    "macos"*)
+        echo "[*] osx"
+        brew update --quiet > /dev/null
+        brew install --quiet \
+            glib \
+            libvorbis \
+            portmidi \
+            sdl_mixer \
+            sound-touch
+    ;;
     *)
         echo "[*] not supported OS: " ${operating_system}
     ;;
