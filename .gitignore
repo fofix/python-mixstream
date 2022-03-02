@@ -9,3 +9,7 @@ mixstream/_MixStream.c
 build/
 .eggs/
 *.egg-info/
+dist/
+MANIFEST
+_skbuild
+.coverage
