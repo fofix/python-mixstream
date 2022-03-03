@@ -19,7 +19,7 @@
 # MA  02110-1301, USA.                                              #
 #####################################################################
 
-__version__ = "1.0.0"
+__version__ = "1.0.1.dev0"
 
 cdef extern from "MixStream.h":
     ctypedef struct CMixStream "MixStream":

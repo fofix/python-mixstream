@@ -25,7 +25,7 @@ if os.getenv("WIN_BUID"):
 # setup
 setup(
     name='mixstream',
-    version='1.0.0',
+    version='1.0.1.dev0',
     description='MixStream is a C-extension to combine SoundTouch and SDL_mixer',
     long_description=long_description,
     long_description_content_type='text/markdown',
