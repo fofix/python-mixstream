@@ -2,6 +2,8 @@
 
 ## 1.1.0 (unreleased)
 
+fix: replace `GStaticMutex` with `GMutex` (deprecation) ([#24](https://github.com/fofix/python-mixstream/pull/24))
+
 ## 1.0.0 (2022-03-03)
 
 feat: build extension with scikit-build

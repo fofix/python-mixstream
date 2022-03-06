@@ -53,7 +53,7 @@ struct _MixStream {
 };
 
 static GHashTable* chan_table = NULL;
-static GStaticMutex chan_table_mutex = G_STATIC_MUTEX_INIT;
+static GMutex chan_table_mutex;
 
 static void _mix_stream_soundtouchify(MixStream* stream);
 
@@ -299,18 +299,18 @@ static void _mix_stream_channel_finished(int channel)
 {
   MixStream* stream;
 
-  g_static_mutex_lock(&chan_table_mutex);
+  g_mutex_lock(&chan_table_mutex);
   stream = g_hash_table_lookup(chan_table, &channel);
-  g_static_mutex_unlock(&chan_table_mutex);
+  g_mutex_unlock(&chan_table_mutex);
 
   if (stream == NULL)
     return;
 
   if (!_mix_stream_nextchunk(stream, FRAMES_PER_CHUNK)) {
-    g_static_mutex_lock(&chan_table_mutex);
+    g_mutex_lock(&chan_table_mutex);
     g_hash_table_remove(chan_table, &stream->channel);
     stream->channel = -1;
-    g_static_mutex_unlock(&chan_table_mutex);
+    g_mutex_unlock(&chan_table_mutex);
     return;
   }
 
@@ -327,10 +327,10 @@ int mix_stream_play(MixStream* stream, int requested_channel)
   if (stream->channel != -1)
     return -1;
 
-  g_static_mutex_lock(&chan_table_mutex);
+  g_mutex_lock(&chan_table_mutex);
   if (chan_table == NULL)
     chan_table = g_hash_table_new_full(g_int_hash, g_int_equal, g_free, NULL);
-  g_static_mutex_unlock(&chan_table_mutex);
+  g_mutex_unlock(&chan_table_mutex);
 
   _mix_stream_nextchunk(stream, FRAMES_PER_CHUNK);
 
@@ -353,10 +353,10 @@ int mix_stream_play(MixStream* stream, int requested_channel)
   }
 
   /* Now we know what channel we're on. Put it into the channel table. */
-  g_static_mutex_lock(&chan_table_mutex);
+  g_mutex_lock(&chan_table_mutex);
   stream->channel = real_channel;
   g_hash_table_insert(chan_table, g_memdup(&stream->channel, sizeof(int)), stream);
-  g_static_mutex_unlock(&chan_table_mutex);
+  g_mutex_unlock(&chan_table_mutex);
 
   stream->chunk_start_ticks = SDL_GetTicks();
   if (requested_channel == -1)
@@ -390,10 +390,10 @@ void mix_stream_stop(MixStream* stream)
   if (stream->channel != -1) {
     /* Unregister the stream so the callback won't do anything more with the stream.
        Again we have the channel table lock/SDL audio lock dilemma...  */
-    g_static_mutex_lock(&chan_table_mutex);
+    g_mutex_lock(&chan_table_mutex);
     g_hash_table_remove(chan_table, &stream->channel);
     stream->channel = -1;
-    g_static_mutex_unlock(&chan_table_mutex);
+    g_mutex_unlock(&chan_table_mutex);
 
     Mix_HaltChannel(stream->channel);
     /* It would seem like we should wait on a condition variable here, but
