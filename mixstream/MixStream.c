@@ -88,9 +88,6 @@ MixStream* mix_stream_new(int samprate, int channels, mix_stream_read_cb read_cb
 {
   MixStream* stream;
 
-  if (!g_thread_supported())
-    g_thread_init(NULL);
-
   stream = g_new0(MixStream, 1);
   stream->samprate = samprate;
   stream->channels = channels;

@@ -19,7 +19,7 @@ MixStream is a C-extension in Python to combine [SoundTouch](https://www.surina.
 
 You'll need those packages:
 
-* `glib`
+* `glib` ( > 2.34)
 * `libogg`
 * `libtheora`
 * `libvorbisfile`
