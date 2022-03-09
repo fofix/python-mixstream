@@ -45,7 +45,7 @@ struct _MixStream {
   int out_sample_size;
   gboolean out_samples_signed;
   gboolean byteswap_needed;
-  GMutex* st_mutex;
+  GMutex st_mutex;
   double next_read_time;
   double out_speed;
   double chunk_start_time;
@@ -130,7 +130,7 @@ MixStream* mix_stream_new(int samprate, int channels, mix_stream_read_cb read_cb
     default: g_assert_not_reached(); break;
   }
 
-  stream->st_mutex = g_mutex_new();
+  stream->st_mutex = *g_mutex_new();
 
   if (stream->samprate != stream->out_freq) {
     _mix_stream_soundtouchify(stream);
@@ -146,7 +146,7 @@ void mix_stream_destroy(MixStream* stream)
 {
   if (stream->channel != -1)
     mix_stream_stop(stream);
-  g_mutex_free(stream->st_mutex);
+  g_mutex_free(&stream->st_mutex);
   if (stream->soundtouch != NULL)
     soundtouch_delete(stream->soundtouch);
   if (stream->free_cb != NULL)
@@ -158,13 +158,13 @@ void mix_stream_destroy(MixStream* stream)
 /* Ensure the stream is using a soundtouch object. */
 static void _mix_stream_soundtouchify(MixStream* stream)
 {
-  g_mutex_lock(stream->st_mutex);
+  g_mutex_lock(&stream->st_mutex);
   if (stream->soundtouch == NULL) {
     stream->soundtouch = soundtouch_new();
     soundtouch_set_sample_rate(stream->soundtouch, stream->samprate);
     soundtouch_set_channels(stream->soundtouch, stream->channels);
   }
-  g_mutex_unlock(stream->st_mutex);
+  g_mutex_unlock(&stream->st_mutex);
 }
 
 
@@ -176,7 +176,7 @@ static gsize _mix_stream_fill_floatbuf(MixStream* stream, float* buf, gsize numf
   gsize frames_read;
   while (numframes > 0) {
 
-    g_mutex_lock(stream->st_mutex);
+    g_mutex_lock(&stream->st_mutex);
     if (stream->soundtouch == NULL) {
       frames_read = stream->read_cb(buf, numframes * frame_size, stream->cb_data) / frame_size;
     } else {
@@ -191,7 +191,7 @@ static gsize _mix_stream_fill_floatbuf(MixStream* stream, float* buf, gsize numf
       }
       frames_read = soundtouch_receive_samples(stream->soundtouch, buf, numframes);
     }
-    g_mutex_unlock(stream->st_mutex);
+    g_mutex_unlock(&stream->st_mutex);
 
     if (frames_read == 0) {
       if (frames_obtained != 0) {
@@ -406,9 +406,9 @@ void mix_stream_stop(MixStream* stream)
 void mix_stream_set_pitch_semitones(MixStream* stream, float semitones)
 {
   _mix_stream_soundtouchify(stream);
-  g_mutex_lock(stream->st_mutex);
+  g_mutex_lock(&stream->st_mutex);
   soundtouch_set_pitch_semitones(stream->soundtouch, semitones);
-  g_mutex_unlock(stream->st_mutex);
+  g_mutex_unlock(&stream->st_mutex);
 }
 
 
@@ -416,10 +416,10 @@ void mix_stream_set_pitch_semitones(MixStream* stream, float semitones)
 void mix_stream_set_speed(MixStream* stream, float speed)
 {
   _mix_stream_soundtouchify(stream);
-  g_mutex_lock(stream->st_mutex);
+  g_mutex_lock(&stream->st_mutex);
   soundtouch_set_tempo(stream->soundtouch, speed);
   stream->out_speed = speed;
-  g_mutex_unlock(stream->st_mutex);
+  g_mutex_unlock(&stream->st_mutex);
 }
 
 
@@ -434,13 +434,13 @@ double mix_stream_seek(MixStream* stream, double time)
     return -1.0;
   SDL_LockAudio();
   new_time = stream->seek_cb(time, stream->cb_data);
-  g_mutex_lock(stream->st_mutex);
+  g_mutex_lock(&stream->st_mutex);
   if (stream->soundtouch != NULL)
     soundtouch_clear(stream->soundtouch);
   stream->eof = FALSE;
   stream->input_eof = FALSE;
   stream->next_read_time = new_time;
-  g_mutex_unlock(stream->st_mutex);
+  g_mutex_unlock(&stream->st_mutex);
   SDL_UnlockAudio();
   return new_time;
 }
