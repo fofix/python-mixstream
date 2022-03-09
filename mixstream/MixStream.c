@@ -130,7 +130,7 @@ MixStream* mix_stream_new(int samprate, int channels, mix_stream_read_cb read_cb
     default: g_assert_not_reached(); break;
   }
 
-  stream->st_mutex = *g_mutex_new();
+  g_mutex_init(&stream->st_mutex);
 
   if (stream->samprate != stream->out_freq) {
     _mix_stream_soundtouchify(stream);
