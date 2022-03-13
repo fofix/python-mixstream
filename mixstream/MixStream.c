@@ -146,7 +146,7 @@ void mix_stream_destroy(MixStream* stream)
 {
   if (stream->channel != -1)
     mix_stream_stop(stream);
-  g_mutex_free(&stream->st_mutex);
+  g_mutex_clear(&stream->st_mutex);
   if (stream->soundtouch != NULL)
     soundtouch_delete(stream->soundtouch);
   if (stream->free_cb != NULL)
