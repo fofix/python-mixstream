@@ -352,7 +352,7 @@ int mix_stream_play(MixStream* stream, int requested_channel)
   /* Now we know what channel we're on. Put it into the channel table. */
   g_mutex_lock(&chan_table_mutex);
   stream->channel = real_channel;
-  g_hash_table_insert(chan_table, g_memdup(&stream->channel, sizeof(int)), stream);
+  g_hash_table_insert(chan_table, g_memdup2(&stream->channel, sizeof(int)), stream);
   g_mutex_unlock(&chan_table_mutex);
 
   stream->chunk_start_ticks = SDL_GetTicks();
