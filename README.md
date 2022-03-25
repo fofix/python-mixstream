@@ -1,7 +1,7 @@
 # MixStream
 
-[![Build Status](https://travis-ci.org/fofix/python-mixstream.svg?branch=master)](https://travis-ci.org/fofix/python-mixstream)
 [![Tests](https://github.com/fofix/python-mixstream/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/fofix/python-mixstream/actions/workflows/tests.yml)
+[![Build](https://github.com/fofix/python-mixstream/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/fofix/python-mixstream/actions/workflows/build.yml)
 
 
 MixStream is a C-extension in Python to combine [SoundTouch](https://www.surina.net/soundtouch/) and [SDL_mixer](https://www.libsdl.org/projects/SDL_mixer/).
@@ -19,7 +19,7 @@ MixStream is a C-extension in Python to combine [SoundTouch](https://www.surina.
 
 You'll need those packages:
 
-* `glib` ( > 2.34)
+* `glib` (> 2.34)
 * `libogg`
 * `libtheora`
 * `libvorbisfile`
