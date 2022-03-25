@@ -70,6 +70,11 @@ cdef class VorbisFileMixStream(object):
     cdef CMixStream* stream
 
     def __cinit__(self, char* filename):
+        """
+        Initialize the VorbisFile MixStream
+
+        :param filename: vorbis file to open
+        """
         cdef GError* err = NULL
         self.stream = mix_stream_new_vorbisfile(filename, &err)
         if self.stream is NULL:
