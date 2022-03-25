@@ -2,6 +2,7 @@
 
 ## 1.1.0 (unreleased)
 
+- ci(tests): use pytest instead of setup.py test ([#32](https://github.com/fofix/python-mixstream/pull/32))
 - fix: remove `g_thread_init` (deprecation) ([#26](https://github.com/fofix/python-mixstream/pull/26))
 - fix: replace `GStaticMutex` with `GMutex` (deprecation) ([#24](https://github.com/fofix/python-mixstream/pull/24))
 - fix: replace `g_mutex_free` with `g_mutex_clear` to free resources (deprecation) ([#29](https://github.com/fofix/python-mixstream/pull/29))
