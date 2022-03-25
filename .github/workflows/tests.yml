@@ -43,6 +43,6 @@ jobs:
         run: |
           python setup.py build_ext --inplace --force
           python setup.py check
-          python setup.py test
+          pytest .
         env:
           SDL_AUDIODRIVER: dummy  # handle alsa issues
