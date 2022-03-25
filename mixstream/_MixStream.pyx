@@ -18,6 +18,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,        #
 # MA  02110-1301, USA.                                              #
 #####################################################################
+# cython: language_level=3
 
 __version__ = "1.0.1.dev0"
 
@@ -69,6 +70,11 @@ cdef class VorbisFileMixStream(object):
     cdef CMixStream* stream
 
     def __cinit__(self, char* filename):
+        """
+        Initialize the VorbisFile MixStream
+
+        :param filename: vorbis file to open
+        """
         cdef GError* err = NULL
         self.stream = mix_stream_new_vorbisfile(filename, &err)
         if self.stream is NULL:
