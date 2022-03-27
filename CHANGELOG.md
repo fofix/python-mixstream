@@ -1,6 +1,6 @@
 # Release notes
 
-## 1.1.0 (unreleased)
+## 1.1.0 (2022-03-27)
 
 - ci(tests): use pytest instead of setup.py test ([#32](https://github.com/fofix/python-mixstream/pull/32))
 - feat(cython): add the language level to compiler directives ([#33](https://github.com/fofix/python-mixstream/pull/33))
