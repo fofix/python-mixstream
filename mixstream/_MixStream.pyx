@@ -20,7 +20,7 @@
 #####################################################################
 # cython: language_level=3
 
-__version__ = "1.0.1.dev0"
+__version__ = "1.1.0"
 
 cdef extern from "MixStream.h":
     ctypedef struct CMixStream "MixStream":
