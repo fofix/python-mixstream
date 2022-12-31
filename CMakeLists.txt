@@ -37,8 +37,8 @@ if (WIN32 AND USE_WIN_DEP)
     # gthread
     find_path(GTHREAD2_INCLUDE_DIRS NAMES glib/gthread.h PATHS "${DEPENDENCY_FOLDER}/include/glib-2.0")
     find_library(GTHREAD2_LINK_LIBRARIES NAMES gthread-2.0 PATHS "${DEPENDENCY_FOLDER}/lib")
-    # sdl_mixer
-    find_package(FindSDL_mixer)
+    # sdl2_mixer
+    find_package(FindSDL2_mixer)
     # soundtouch
     find_path(SOUNDTOUCH_INCLUDE_DIRS NAMES SoundTouch.h SoundTouchDLL.h PATHS "${DEPENDENCY_FOLDER}/include/soundtouch")
     find_library(SOUNDTOUCH_LINK_LIBRARIES NAMES libsoundtouch soundtouch soundtouchdll_x64 soundtouchdll_x86 soundtouchdll soundtouch-c PATHS "${DEPENDENCY_FOLDER}/lib")
@@ -54,7 +54,8 @@ else()
     pkg_search_module(GTHREAD2 REQUIRED gthread-2.0 IMPORTED_TARGET)
     pkg_search_module(SOUNDTOUCH REQUIRED soundtouch soundtouch-1.0 soundtouch-1.4 IMPORTED_TARGET)
     pkg_search_module(VORBISFILE REQUIRED vorbisfile IMPORTED_TARGET)
-    find_package(SDL_mixer REQUIRED)
+    pkg_search_module(SDL2_MIXER REQUIRED SDL2_mixer IMPORTED_TARGET)
+    #find_package(SDL_mixer REQUIRED)
 endif()
 
 
