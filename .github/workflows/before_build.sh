@@ -17,11 +17,11 @@ case ${operating_system} in
         echo "apt: `which apt`"
         echo "apt-get: `which apt-get`"
         echo "yum: `which yum`"
-        #apt-get install libglib2.0-dev libvorbis-dev libportmidi-dev libsdl-mixer1.2-dev
+        #apt-get install libglib2.0-dev libvorbis-dev libportmidi-dev libsdl2-mixer-dev
 
         yum -y install \
             portmidi-devel \
-            SDL_mixer-devel \
+            SDL2_mixer-devel \
             soundtouch-devel \
             libvorbis-devel
     ;;
@@ -32,7 +32,7 @@ case ${operating_system} in
             glib \
             libvorbis \
             portmidi \
-            sdl_mixer \
+            sdl2_mixer \
             sound-touch
     ;;
     *)
