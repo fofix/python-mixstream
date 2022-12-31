@@ -374,9 +374,9 @@ gboolean mix_stream_is_playing(const MixStream* stream)
    * SDL audio lock held, so take it when doing this check to prevent false
    * indications that the stream is not playing.
    */
-  SDL_LockAudio();
+  SDL_LockAudioDevice(1);
   playing = ((stream->channel != -1) && Mix_Playing(stream->channel));
-  SDL_UnlockAudio();
+  SDL_UnlockAudioDevice(1);
   return playing;
 }
 
@@ -432,7 +432,7 @@ double mix_stream_seek(MixStream* stream, double time)
   double new_time;
   if (stream->seek_cb == NULL)
     return -1.0;
-  SDL_LockAudio();
+  SDL_LockAudioDevice(1);
   new_time = stream->seek_cb(time, stream->cb_data);
   g_mutex_lock(&stream->st_mutex);
   if (stream->soundtouch != NULL)
@@ -441,7 +441,7 @@ double mix_stream_seek(MixStream* stream, double time)
   stream->input_eof = FALSE;
   stream->next_read_time = new_time;
   g_mutex_unlock(&stream->st_mutex);
-  SDL_UnlockAudio();
+  SDL_UnlockAudioDevice(1);
   return new_time;
 }
 
@@ -462,11 +462,11 @@ double mix_stream_get_position(MixStream* stream)
   if (!mix_stream_is_playing(stream))
     return -1.0;
 
-  SDL_LockAudio();
+  SDL_LockAudioDevice(1);
   chunk_time = (double)FRAMES_PER_CHUNK/(double)stream->out_freq;
   time_since_chunk_start = CLAMP((SDL_GetTicks() - stream->chunk_start_ticks) / 1000.0, 0.0, chunk_time);
   position = stream->chunk_start_time + stream->out_speed * time_since_chunk_start;
-  SDL_UnlockAudio();
+  SDL_UnlockAudioDevice(1);
   return position;
 }
 
@@ -479,9 +479,9 @@ double mix_stream_get_length(MixStream* stream)
   double length;
   if (stream->length_cb == NULL)
     return -1.0;
-  SDL_LockAudio();
+  SDL_LockAudioDevice(1);
   length = stream->length_cb(stream->cb_data);
-  SDL_UnlockAudio();
+  SDL_UnlockAudioDevice(1);
   return length;
 }
 
