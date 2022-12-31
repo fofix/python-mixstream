@@ -21,8 +21,8 @@
 #include "MixStream.h"
 
 #include "soundtouch-c.h"
-#include <SDL_mixer.h>
-#include <SDL.h>
+#include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL.h>
 
 #define FRAMES_PER_CHUNK 4096
 
