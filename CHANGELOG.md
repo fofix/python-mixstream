@@ -1,5 +1,10 @@
 # Release notes
 
+## 1.2.0 (unreleased)
+
+- build: drop support for Python version 3.7 to 3.9
+- build: support Python version 3.10 to 3.14
+
 ## 1.1.0 (2022-03-27)
 
 - ci(tests): use pytest instead of setup.py test ([#32](https://github.com/fofix/python-mixstream/pull/32))
